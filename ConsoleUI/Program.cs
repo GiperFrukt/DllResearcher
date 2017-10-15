@@ -12,11 +12,11 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             Console.WriteLine("Введите путь к папке с файлами:");
-            string pathToFolder = @"C:\Asemblies";// Console.ReadLine();
+            string pathToFolder = Console.ReadLine();
 
-            List<Dictionary<string, List<string>>> aa = ResearchAssemblies.FindClassAndMethods(pathToFolder).ToList();
+            List<Dictionary<string, List<string>>> dataFromDll = ResearchAssemblies.FindClassAndMethods(pathToFolder).ToList();
 
-            aa.ForEach(dictionary =>
+            dataFromDll.ForEach(dictionary =>
             {
                 Console.WriteLine("\n");
 

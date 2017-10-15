@@ -25,7 +25,7 @@ namespace ObjectsIntoDll
             }
             else
             {
-                dataIntoAllDll.Add(new Dictionary<string, List<string>>() { { "Ошибка при указании пути. Данной папки не существует", new List<string> { } } });
+                dataIntoAllDll.Add(new Dictionary<string, List<string>>() { { "Ошибка при указании пути. Данной папки не существует", new List<string>() } });
             }
             return dataIntoAllDll;
         }
@@ -35,6 +35,7 @@ namespace ObjectsIntoDll
         /// </summary>
         /// <param name="pathToDll"> Путь до конкретной dll</param>
         /// <returns>Публичные и защищённый классы и методы</returns>
+        /// <remarks>При возникновении ошибок, связанных с загрузкой dll, программа продолжит работу и выведет причину ошибки</remarks>
         private static Dictionary<string, List<string>> ResearchDll(string pathToDll)
         {
             Assembly assembly = null; // Сборка
@@ -96,65 +97,6 @@ namespace ObjectsIntoDll
                 }
             }
             return result;
-
-
-            #region Много ретурнов
-            //Assembly assembly = null; // Сборка
-            //IEnumerable<TypeInfo> ClassList = null; // Перечень классов в сборке
-            //// Словарь "класс - публичные/защищённые методы"
-            //Dictionary<string, List<string>> result = new Dictionary<string, List<string>>();
-
-            //try
-            //{
-            //    assembly = Assembly.ReflectionOnlyLoadFrom(pathToDll); // подгрузка сборки без права использовать её методы
-            //}
-            //catch (BadImageFormatException badImage)
-            //{
-            //    result.Add(pathToDll, new List<string> { "Отсутствует манифест сборки. Анализ невозможен" });
-            //    return result;
-            //}
-            //catch (Exception ex)
-            //{
-            //    result.Add(pathToDll, new List<string> { ex.Message });
-            //    return result;
-            //}
-
-
-
-            //try
-            //{
-            //    // Типы, определённые внутри данной сборки
-            //    ClassList = assembly.DefinedTypes;
-            //}
-            //catch (ReflectionTypeLoadException ex)
-            //{
-            //    result.Add(assembly.GetName().ToString(), new List<string> { "В сборке обнаружены зависимости от недоступных сборок. Анализ не возможен" });
-            //    return result;
-            //}
-            //catch (Exception ex)
-            //{
-            //    result.Add(assembly.GetName().ToString(), new List<string> { ex.Message });
-            //    return result;
-            //}
-
-            //// обход всех классов и методов для составления списка публичных и защищённых
-            //ClassList.ToList().ForEach(className => className.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly).ToList().
-            //    ForEach(methodName =>
-            //    {
-            //        // Добавление метода в словарь, если он не закрытый
-            //        if (!methodName.IsPrivate)
-            //        {
-            //            string key = methodName.ReflectedType.Name.ToString(); // Имя класс
-            //            string value = methodName.Name.ToString(); // Имя метода
-            //            if (!result.ContainsKey(key))
-            //            {
-            //                result.Add(key, new List<string> { });
-            //            }
-            //            result[key].Add(value);
-            //        }
-            //    }));
-            //return result; 
-            #endregion
         }
     }
 
